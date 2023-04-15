@@ -15,4 +15,26 @@ public class State {
 
     //getters and setters
 
+    public String toString() {
+        return name;
+    }
+
+    public boolean isAcc() {
+        return isAcceptState;
+    }
+
+    public boolean isStart() {
+        return isStartState;
+    }
+
+    public void incTransCnt() {
+        transitionCnt++;
+    }
+
+    public int getTransCnt() {
+        return transitionCnt;
+    }
+
+
+
 }
