@@ -1,12 +1,11 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
 
 public class TMSimulator {
     //Main class to create and manage the Turing Machine
-
-    //Handle the tape using a doubly linked list, using LinkedList java class
 
     public static void main(String[] args) throws FileNotFoundException {
 
@@ -18,6 +17,7 @@ public class TMSimulator {
         //Other instance variables
         int totalStates;
         int alphabetCount;
+        HashMap<TMState, TranInfo> TM = new HashMap<TMState, TranInfo>();
 
         //First thing, check that a file has been given
         if(args[0].isEmpty())
@@ -34,31 +34,47 @@ public class TMSimulator {
 
         //Use second line for how many symbols in alphabet
         alphabetCount = Integer.parseInt(line);
-        line = lineScanner.nextLine()
+        line = lineScanner.nextLine();
 
         //Use a loop for remaining lines + addational scanner to build transitions
         Scanner characterScanner;
-        int state;
-        Character LorR;
+        int state, writeSymbol;
+        String move;
         while(lineScanner.hasNextLine())
         {
             characterScanner = new Scanner(line).useDelimiter(",");
-            state = characterScanner.nextInt();
             //For each line, we need to check three characters
+            
             //First will tell use what state to start on
+            state = characterScanner.nextInt();            
+            
+            //Check to make sure state is a legal state
             if(state < 0 || state > totalStates - 1)
             {
+                lineScanner.close();
+                characterScanner.close();
                 return;
             }
 
+            //Loop through the total number of states in the machine
+            writeSymbol = characterScanner.nextInt();
+            //Check if the symbol to be written is legal
+            if(writeSymbol < 0 || writeSymbol > alphabetCount)
+            {
+                lineScanner.close();
+                characterScanner.close();
+                return;
+            }
 
             //Second state will tell us the transition char
-            state = characterScanner.nextInt();
-            
 
+            
+            
+            characterScanner.close();
         }
           
 
+        lineScanner.close();
     }
 
     //Just creating space

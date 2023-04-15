@@ -1,12 +1,12 @@
 
 
-public class State {
-    private String name;
+public class TMState {
+    private int name;
     private boolean isAcceptState = false;
     private boolean isStartState = false;
     private int transitionCnt;
 
-    public State(String n, boolean isAcc, boolean isStart) {
+    public TMState(int n, boolean isAcc, boolean isStart) {
         name = n;
         isAcceptState = isAcc;
         isStartState = isStart;
@@ -15,7 +15,7 @@ public class State {
 
     //getters and setters
 
-    public String toString() {
+    public int getName() {
         return name;
     }
 
