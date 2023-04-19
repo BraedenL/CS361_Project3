@@ -5,15 +5,13 @@ enum Direction {
 }
 
 public class TranInfo {
-    private TMState fromState;
     private Direction tapeDir;
     private char tapeCharRead;
     private char tapeCharReplacement;
     private TMState nextState;
 
 
-    public TranInfo(TMState from, Direction dir, char oldChar, char newChar, TMState next) {
-        fromState = from;
+    public TranInfo(Direction dir, char oldChar, char newChar, TMState next) {
         tapeDir = dir;
         tapeCharRead = oldChar;
         tapeCharReplacement = newChar;

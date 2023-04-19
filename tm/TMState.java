@@ -61,12 +61,14 @@ public class TMState {
      * @param next
      * @return
      */
-    public boolean addNewTranInfo(TMState from, Direction dir, char oldChar, char newChar, TMState next) {
+    public boolean addNewTranInfo(Direction dir, char oldChar, char newChar, TMState next) {
         try {
-            TranInfo TI = new TranInfo(from, dir, oldChar, newChar, next);
+            TranInfo TI = new TranInfo(dir, oldChar, newChar, next);
             Transitions.add(TI);
+            incTransCnt();
             return true;
         } catch (Exception e) {
+            System.out.println(e.toString());
             return false;
         }
     }
