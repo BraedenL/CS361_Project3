@@ -13,6 +13,10 @@ public class TMState {
         transitionCnt = 0;
     }
 
+    public TMState() {
+        
+    }
+
     //getters and setters
 
     public int getName() {
