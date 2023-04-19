@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -15,9 +17,9 @@ public class TMSimulator {
         String head = tape.getFirst();
 
         //Other instance variables
-        int totalStates;
-        int alphabetCount;
-        HashMap<TMState, TranInfo> TM = new HashMap<TMState, TranInfo>();
+        int totalStates, alphabetCount, totalTransitionCount, transitionPerState;
+        //HashMap<TMState, TranInfo> TM = new HashMap<TMState, TranInfo>();
+        ArrayList<TMState> TM;
 
         //First thing, check that a file has been given
         if(args[0].isEmpty())
@@ -36,10 +38,23 @@ public class TMSimulator {
         alphabetCount = Integer.parseInt(line);
         line = lineScanner.nextLine();
 
+        totalTransitionCount = (totalStates-1) * alphabetCount;
+        transitionPerState = alphabetCount + 1;
+
+        //Read needed info for array
+        TM = new ArrayList<TMState>(totalStates);
+        int stateCounter = 0;
+        for (TMState tmState : TM) 
+        {
+            tmState.setName(stateCounter);
+            stateCounter++;    
+        }
+
         //Use a loop for remaining lines + addational scanner to build transitions
         Scanner characterScanner;
         int state, writeSymbol;
         String move;
+        int transitionCharacterCounter = transitionPerState;
         while(lineScanner.hasNextLine())
         {
             characterScanner = new Scanner(line).useDelimiter(",");
@@ -66,7 +81,14 @@ public class TMSimulator {
                 return;
             }
 
-            //Second state will tell us the transition char
+            //Reading the tape direction
+            move = characterScanner.next();
+            if(move.equals("L") || move.equals("R"))
+            {
+                lineScanner.close();
+                characterScanner.close();
+                return;
+            }
 
             
             
