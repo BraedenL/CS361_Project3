@@ -5,6 +5,7 @@ public class TMState {
     private boolean isAcceptState = false;
     private boolean isStartState = false;
     private int transitionCnt;
+    
 
     public TMState(int n, boolean isAcc, boolean isStart) {
         name = n;
@@ -14,10 +15,21 @@ public class TMState {
     }
 
     public TMState() {
-        
+        transitionCnt = 0;
     }
 
     //getters and setters
+    public void setName(int newName) {
+        name = newName;
+    }
+
+    public void setIsAcc(boolean isAcc) {
+        isAcceptState = isAcc;
+    }
+
+    public void setIsStart(boolean isStart) {
+        isStartState = isStart;
+    }
 
     public int getName() {
         return name;
