@@ -49,14 +49,17 @@ public class TMSimulator {
             tmState.setName(stateCounter);
             stateCounter++;    
         }
+        TM.get(0).setIsStart(true);
+        TM.get(totalStates-1).setIsAcc(true);
 
         //Use a loop for remaining lines + addational scanner to build transitions
         Scanner characterScanner;
         int state, writeSymbol;
         String move;
-        int transitionCharacterCounter = transitionPerState;
+        int transitionCharacterCounter = 0, fromStateTransitionCounter = 0;
         while(lineScanner.hasNextLine())
         {
+            TMState tempState;
             characterScanner = new Scanner(line).useDelimiter(",");
             //For each line, we need to check three characters
             
@@ -88,10 +91,11 @@ public class TMSimulator {
                 lineScanner.close();
                 characterScanner.close();
                 return;
-            }
+            }    
+            
+            TM.get(fromStateTransitionCounter).addNewTranInfo(move, transitionCharacterCounter, writeSymbol, state);
 
-            
-            
+
             characterScanner.close();
         }
           
