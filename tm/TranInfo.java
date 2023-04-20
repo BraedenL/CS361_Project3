@@ -29,11 +29,11 @@ public class TranInfo {
         return tapeDir;
     }
 
-    public char readChar() {
+    public int readChar() {
         return tapeCharRead;
     }
 
-    public char writeChar() {
+    public int writeChar() {
         return tapeCharReplacement;
     }
 
