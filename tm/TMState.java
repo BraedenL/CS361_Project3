@@ -61,7 +61,7 @@ public class TMState {
      * @param next
      * @return
      */
-    public boolean addNewTranInfo(Direction dir, char oldChar, char newChar, TMState next) {
+    public boolean addNewTranInfo(String dir, int oldChar, int newChar, TMState next) {
         try {
             TranInfo TI = new TranInfo(dir, oldChar, newChar, next);
             Transitions.add(TI);

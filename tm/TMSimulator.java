@@ -93,12 +93,19 @@ public class TMSimulator {
                 return;
             }    
             
-            TM.get(fromStateTransitionCounter).addNewTranInfo(move, transitionCharacterCounter, writeSymbol, state);
-
+            TM.get(fromStateTransitionCounter).addNewTranInfo(move, transitionCharacterCounter, writeSymbol, TM.get(state));
+            transitionCharacterCounter++;
+            if(transitionCharacterCounter > transitionPerState)
+            { 
+                transitionCharacterCounter = 0;
+                fromStateTransitionCounter++;
+            }
 
             characterScanner.close();
         }
           
+        //Read through input string
+
 
         lineScanner.close();
     }
