@@ -14,7 +14,7 @@ public class TMSimulator {
         //Handle the tape using a doubly linked list, using LinkedList java class
         LinkedList<String> tape = new LinkedList<String>();
         //Main position tracker for the tape
-        String head = tape.getFirst();
+        //String head = tape.getFirst();
 
         //Other instance variables
         int totalStates, alphabetCount, totalTransitionCount, transitionPerState;
@@ -44,6 +44,11 @@ public class TMSimulator {
         //Read needed info for array
         TM = new ArrayList<TMState>(totalStates);
         int stateCounter = 0;
+        //first fill the array with empty states
+        for (int i = 0; i < totalStates; i++) {
+            TMState s = new TMState();
+            TM.add(s);
+        }
         for (TMState tmState : TM) 
         {
             tmState.setName(stateCounter);
