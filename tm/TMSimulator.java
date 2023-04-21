@@ -21,7 +21,7 @@ public class TMSimulator {
         ArrayList<TMState> TM;
 
         //First thing, check that a file has been given
-        if(args[0].isEmpty())
+        if(args[0] == null)
         {
             return;
         }
@@ -49,7 +49,7 @@ public class TMSimulator {
         }
         line = lineScanner.nextLine();
 
-        totalTransitionCount = (totalStates-1) * alphabetCount;
+        totalTransitionCount = (totalStates-1) * (alphabetCount + 1);
         transitionPerState = alphabetCount + 1;
 
         //Read needed info for array
@@ -68,13 +68,14 @@ public class TMSimulator {
         TM.get(0).setIsStart(true);
         TM.get(totalStates-1).setIsAccept(true);
 
+        System.out.println(totalStates + " - " + alphabetCount + " - " + totalTransitionCount + " - " + transitionPerState);
         
         //Use a loop for remaining lines + addational scanner to build transitions
         Scanner characterScanner;
         int state, writeSymbol;
         String move;
         int transitionCharacterCounter = 0, fromStateTransitionCounter = 0;
-        for (int i = 0; i < (totalStates-1)*(transitionPerState); i++)
+        for (int i = 0; i < totalTransitionCount; i++)
         {
 
             TMState tempState;
@@ -113,7 +114,7 @@ public class TMSimulator {
             
             TM.get(fromStateTransitionCounter).addNewTranInfo(move, transitionCharacterCounter, writeSymbol, TM.get(state));
             transitionCharacterCounter++;
-            if(transitionCharacterCounter > transitionPerState)
+            if(transitionCharacterCounter == transitionPerState)
             { 
                 transitionCharacterCounter = 0;
                 fromStateTransitionCounter++;
@@ -121,17 +122,35 @@ public class TMSimulator {
 
             characterScanner.close();
 
+            
             if(!lineScanner.hasNext()){ //this should only be possible after all transitions are read in and there is no string given
+                //The file has no input string check printout 
+                System.out.println("There is no provided input string, initializing string with all 0's");
                 System.out.print("\n");//print a newline so user knows that the program didn't have an unexpected failure
-                lineScanner.close();
-                return;
+                //lineScanner.close();
+                break;
             }
+            
             line = lineScanner.nextLine();
+            //System.out.println(i);
         }
-
         //Read through input string
-        String inputString = lineScanner.next();
-
+        String inputString;
+        if(lineScanner.hasNext())
+        {
+            //The machine has a string for input
+            inputString = lineScanner.next();
+        }
+        else
+        {
+            //The machine does not have an input string
+            inputString = "";
+            for(int i = 0; i < totalTransitionCount; i++)
+            {
+                inputString += "0";
+            }
+        }
+        
         //Set the tape to the values inside of the input string
         for (int c : inputString.toCharArray())
         {
@@ -140,6 +159,8 @@ public class TMSimulator {
         int head = 0;
         int currentState = 0;
 
+        System.out.println(tape);
+        System.out.println("We are now moving to reading tape");
         //////////////////////
         //// Reading Tape ////
         //////////////////////
