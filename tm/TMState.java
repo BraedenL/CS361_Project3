@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import javax.lang.model.util.ElementScanner6;
+
 public class TMState {
     private int name;
     private boolean isAcceptState = false;
@@ -24,7 +26,7 @@ public class TMState {
         name = newName;
     }
 
-    public void setIsAcc(boolean isAcc) {
+    public void setIsAccept(boolean isAcc) {
         isAcceptState = isAcc;
     }
 
@@ -36,7 +38,7 @@ public class TMState {
         return name;
     }
 
-    public boolean isAcc() {
+    public boolean isAcceptState() {
         return isAcceptState;
     }
 
@@ -73,6 +75,20 @@ public class TMState {
         }
     }
 
-
+    public boolean isTransition(int input)
+    {
+        for (TranInfo tranInfo : Transitions) {
+            if(tranInfo.getNextState().getName() == input)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public String getTapeDirection(int input)
+    {
+        String direction = Transitions.get(input).getDirection();
+        return direction;
+    }
 
 }

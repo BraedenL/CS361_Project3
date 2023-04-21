@@ -12,9 +12,8 @@ public class TMSimulator {
     public static void main(String[] args) throws FileNotFoundException {
 
         //Handle the tape using a doubly linked list, using LinkedList java class
-        LinkedList<String> tape = new LinkedList<String>();
+        LinkedList<Integer> tape = new LinkedList<Integer>();
         //Main position tracker for the tape
-        //String head = tape.getFirst();
 
         //Other instance variables
         int totalStates, alphabetCount, totalTransitionCount, transitionPerState;
@@ -55,7 +54,7 @@ public class TMSimulator {
             stateCounter++;    
         }
         TM.get(0).setIsStart(true);
-        TM.get(totalStates-1).setIsAcc(true);
+        TM.get(totalStates-1).setIsAccept(true);
 
         //Use a loop for remaining lines + addational scanner to build transitions
         Scanner characterScanner;
@@ -91,7 +90,7 @@ public class TMSimulator {
 
             //Reading the tape direction
             move = characterScanner.next();
-            if(move.equals("L") || move.equals("R"))
+            if(!move.equals("L") || !move.equals("R"))
             {
                 lineScanner.close();
                 characterScanner.close();
@@ -110,8 +109,54 @@ public class TMSimulator {
         }
           
         //Read through input string
+        String inputString = lineScanner.next();
 
+        //Set the tape to the values inside of the input string
+        for (int c : inputString.toCharArray())
+        {
+            tape.add(c);
+        }
+        int head = 0;
+        int currentState = 0;
 
+        //////////////////////
+        //// Reading Tape ////
+        //////////////////////
+        //Head will track where we are on tape, currentState track which state in the TM we are in
+        
+        //TM halts upon reaching accept no matter what, so why not just track where our state is and if we reach the end (biggest) state
+        //Can add a check inside of the machine in case we run out of tape
+        while(currentState != totalStates-1)
+        {
+            //Print out each tape visited in the machine
+            System.out.println(tape.get(head).toString());
+
+            if(TM.get(currentState).isTransition(head))
+            {
+                if(TM.get(currentState).getTapeDirection(head).equals("L"))
+                {
+                    head--;
+                }
+                if(TM.get(currentState).getTapeDirection(head).equals("R"))
+                {
+                    head++;
+                }
+                currentState = TM.get(head).getName();
+
+                //Might need handle so tape doesn't end up going off into nowhere?
+
+                if(TM.get(currentState).isAcceptState())
+                {
+                    //Program has reached the accepted state and rest of the tape and string can be ignored 
+                    break;
+                }
+            }
+        }
+
+        //Print a blank line
+        System.out.println();
+
+        //Round out and close
         lineScanner.close();
     }
 
