@@ -15,10 +15,12 @@ public class TMState {
         isAcceptState = isAcc;
         isStartState = isStart;
         transitionCnt = 0;
+        Transitions = new ArrayList<TranInfo>();
     }
 
     public TMState() {
         transitionCnt = 0;
+        Transitions = new ArrayList<TranInfo>();
     }
 
     //getters and setters
@@ -77,6 +79,9 @@ public class TMState {
 
     public boolean isTransition(int input)
     {
+        if(Transitions.isEmpty()){
+            return false;
+        }
         for (TranInfo tranInfo : Transitions) {
             if(tranInfo.getNextState().getName() == input)
             {

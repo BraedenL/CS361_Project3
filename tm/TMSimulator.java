@@ -56,13 +56,16 @@ public class TMSimulator {
         TM.get(0).setIsStart(true);
         TM.get(totalStates-1).setIsAccept(true);
 
+        
         //Use a loop for remaining lines + addational scanner to build transitions
         Scanner characterScanner;
         int state, writeSymbol;
         String move;
         int transitionCharacterCounter = 0, fromStateTransitionCounter = 0;
-        while(lineScanner.hasNextLine())
+        for (int i = 0; i < (totalStates-1)*(transitionPerState); i++)
         {
+            // System.out.println("here");
+
             TMState tempState;
             characterScanner = new Scanner(line).useDelimiter(",");
             //For each line, we need to check three characters
@@ -90,7 +93,7 @@ public class TMSimulator {
 
             //Reading the tape direction
             move = characterScanner.next();
-            if(!move.equals("L") || !move.equals("R"))
+            if(!move.equals("L") && !move.equals("R"))
             {
                 lineScanner.close();
                 characterScanner.close();
@@ -106,8 +109,12 @@ public class TMSimulator {
             }
 
             characterScanner.close();
+            // System.out.println("here");
         }
-          
+        
+        //debuging
+        //System.out.println("here");
+
         //Read through input string
         String inputString = lineScanner.next();
 
@@ -128,7 +135,7 @@ public class TMSimulator {
         //Can add a check inside of the machine in case we run out of tape
         while(currentState != totalStates-1)
         {
-            //Print out each tape visited in the machine
+            //Print out each position in tape visited in the machine
             System.out.println(tape.get(head).toString());
 
             if(TM.get(currentState).isTransition(head))
