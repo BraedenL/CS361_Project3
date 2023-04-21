@@ -27,14 +27,26 @@ public class TMSimulator {
         }
         File inputFile = new File(args[0]);
         Scanner lineScanner = new Scanner(inputFile);
+        if(!lineScanner.hasNext()){ 
+            lineScanner.close();
+            return;
+        }
         String line = lineScanner.nextLine();
 
         //Use first scanned line for states
         totalStates = Integer.parseInt(line);
+        if(!lineScanner.hasNext()){ 
+            lineScanner.close();
+            return;
+        }
         line = lineScanner.nextLine();
 
         //Use second line for how many symbols in alphabet
         alphabetCount = Integer.parseInt(line);
+        if(!lineScanner.hasNext()){ 
+            lineScanner.close();
+            return;
+        }
         line = lineScanner.nextLine();
 
         totalTransitionCount = (totalStates-1) * alphabetCount;
@@ -64,7 +76,6 @@ public class TMSimulator {
         int transitionCharacterCounter = 0, fromStateTransitionCounter = 0;
         for (int i = 0; i < (totalStates-1)*(transitionPerState); i++)
         {
-            // System.out.println("here");
 
             TMState tempState;
             characterScanner = new Scanner(line).useDelimiter(",");
@@ -109,11 +120,14 @@ public class TMSimulator {
             }
 
             characterScanner.close();
-            // System.out.println("here");
+
+            if(!lineScanner.hasNext()){ //this should only be possible after all transitions are read in and there is no string given
+                System.out.print("\n");//print a newline so user knows that the program didn't have an unexpected failure
+                lineScanner.close();
+                return;
+            }
+            line = lineScanner.nextLine();
         }
-        
-        //debuging
-        //System.out.println("here");
 
         //Read through input string
         String inputString = lineScanner.next();
