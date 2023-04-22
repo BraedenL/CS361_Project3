@@ -130,17 +130,20 @@ public class TMSimulator {
                 //lineScanner.close();
                 break;
             }
+            else
+            {
+                line = lineScanner.nextLine();
+            }
             
-            line = lineScanner.nextLine();
             //System.out.println(i);
         }
         //Read through input string
         String inputString;
         int head = 0; 
-        if(lineScanner.hasNext())
+        if(!line.contains(","))
         {
             //The machine has a string for input
-            inputString = lineScanner.next();
+            inputString = line;
             for (int c : inputString.toCharArray())
             {
                 tape.add(c);
@@ -184,11 +187,16 @@ public class TMSimulator {
                     }
                     tape.set(head, TM.get(currentState).getWriteValue(tape.get(head)));
                     //I THINK THIS ADD IS WRONG (changed to indexOf(head))
-                    if(tape.indexOf(head) == 0) {
+                    if(head == 0) {
                         tape.addFirst(0);
                     }
+                    else
+                    {
+                        head--;
+                    }
+                    
                     //I think this head-- needs checking where it is to decide if to move it, mainly when adding new 0
-                    head--;
+                    
                 }
                 else if(TM.get(currentState).getTapeDirection(tape.get(head)).equals("R"))
                 {
