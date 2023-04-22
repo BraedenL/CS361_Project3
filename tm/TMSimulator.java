@@ -179,13 +179,19 @@ public class TMSimulator {
                 {
                     currentState = TM.get(currentState).getNextState(head);
                     tape.set(head, TM.get(currentState).getWriteValue(head));
-                    head = tape.get(head--);
+                    if(head == 0) {
+                        tape.addFirst(0);
+                    }
+                    // head = tape.get(head--); //since were adding to the front it would effectively move the head without actually having to change the value of head
                 }
                 else if(TM.get(currentState).getTapeDirection(head).equals("R"))
                 {
                     currentState = TM.get(currentState).getNextState(head);
                     tape.set(head, TM.get(currentState).getWriteValue(head));
-                    head = tape.get(head++);
+                    if(head == (tape.size() - 1)) {
+                        tape.addLast(0);
+                    }
+                    head = tape.get(head++);//since were adding a zero at the end we still need to shift the head to move into the new spot
                 }
                 //Need to move the current state
                 //System.out.println(currentState + "and head is located at: " + head);
