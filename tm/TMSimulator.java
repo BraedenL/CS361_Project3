@@ -136,31 +136,33 @@ public class TMSimulator {
         }
         //Read through input string
         String inputString;
+        int head;
         if(lineScanner.hasNext())
         {
             //The machine has a string for input
             inputString = lineScanner.next();
+            for (int c : inputString.toCharArray())
+            {
+                tape.add(c);
+            }
+            head = tape.get(0);
         }
         else
         {
             //The machine does not have an input string
-            inputString = "";
             for(int i = 0; i < totalTransitionCount; i++)
             {
-                inputString += "0";
+                tape.add(0);
             }
+            head = 0;
         }
         
         //Set the tape to the values inside of the input string
-        for (int c : inputString.toCharArray())
-        {
-            tape.add(c);
-        }
-        int head = 0;
         int currentState = 0;
 
         System.out.println(tape);
         System.out.println("We are now moving to reading tape");
+        
         //////////////////////
         //// Reading Tape ////
         //////////////////////
@@ -168,28 +170,41 @@ public class TMSimulator {
         
         //TM halts upon reaching accept no matter what, so why not just track where our state is and if we reach the end (biggest) state
         //Can add a check inside of the machine in case we run out of tape
+        int timeCheck = 0;
         while(currentState != totalStates-1)
         {
             //Print out each position in tape visited in the machine
-            System.out.println(tape.get(head).toString());
+            //System.out.println(tape.get(head).toString());
 
             if(TM.get(currentState).isTransition(head))
             {
+                timeCheck++;
+                //Move the tape
                 if(TM.get(currentState).getTapeDirection(head).equals("L"))
                 {
-                    head--;
+                    currentState = TM.get(currentState).getNextState(head);
+                    tape.set(head, TM.get(currentState).getWriteValue(head));
+                    head = tape.get(head--);
                 }
-                if(TM.get(currentState).getTapeDirection(head).equals("R"))
+                else if(TM.get(currentState).getTapeDirection(head).equals("R"))
                 {
-                    head++;
+                    currentState = TM.get(currentState).getNextState(head);
+                    tape.set(head, TM.get(currentState).getWriteValue(head));
+                    head = tape.get(head++);
                 }
-                currentState = TM.get(head).getName();
-
+                //Need to move the current state
+                //System.out.println(currentState + "and head is located at: " + head);
                 //Might need handle so tape doesn't end up going off into nowhere?
+                System.out.print(head);
 
                 if(TM.get(currentState).isAcceptState())
                 {
                     //Program has reached the accepted state and rest of the tape and string can be ignored 
+                    break;
+                }
+                //Check for a loop, halt machine
+                if(timeCheck >= totalTransitionCount)
+                {
                     break;
                 }
             }

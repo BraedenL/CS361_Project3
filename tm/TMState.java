@@ -82,13 +82,31 @@ public class TMState {
         if(Transitions.isEmpty()){
             return false;
         }
+        /*
         for (TranInfo tranInfo : Transitions) {
-            if(tranInfo.getNextState().getName() == input)
+            if(tranInfo.getNextStateName() == input)
             {
                 return true;
             }
         }
+        */
+        for(int i = 0; i < Transitions.size(); i++)
+        {
+            if(input == i)
+            {
+                return true;
+            }
+        }
+        
         return false;
+    }
+    public int getNextState(int transition)
+    {
+        return Transitions.get(transition).getNextStateName();
+    }
+    public int getWriteValue(int transition)
+    {
+        return Transitions.get(transition).writeChar();
     }
     public String getTapeDirection(int input)
     {

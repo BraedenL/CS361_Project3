@@ -25,6 +25,11 @@ public class TranInfo {
         return nextState;
     }
 
+    public int getNextStateName()
+    {
+        return nextState.getName();
+    }
+
     public String getDirection() {
         return tapeDir;
     }
