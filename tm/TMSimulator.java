@@ -173,23 +173,29 @@ public class TMSimulator {
         {
             //Print out each position in tape visited in the machine
             //System.out.println(tape.get(head).toString());
+            // if(tape.size() == 138){
+            //     System.out.println("made it");
+            // }
+            // if(head == 10){
+            //     System.out.println("made it back");
+            // }
             testTracker++;
             if(TM.get(currentState).isTransition(tape.get(head)))
             {
                 //Move the tape
                 if(TM.get(currentState).getTapeDirection(tape.get(head)).equals("L"))
                 {
-                    System.out.print(tape.get(head));
+                    // System.out.print(tape.get(head));
 
                     previousState = currentState;
-                    //Checked if using a previous state counter was issue !!!
+                    //Checked if using a previous state counter was issue!!!
                     currentState = TM.get(currentState).getNextState(tape.get(head));
+                    tape.set(head, TM.get(previousState).getWriteValue(tape.get(head)));
                     if(TM.get(currentState).isAcceptState())
                     {
                         //Program has reached the accepted state and rest of the tape and string can be ignored 
                         break;
                     }
-                    tape.set(head, TM.get(previousState).getWriteValue(tape.get(head)));
                     //I THINK THIS ADD IS WRONG (changed to indexOf(head))
                     if(head == 0) {
                         tape.addFirst(0);
@@ -200,17 +206,18 @@ public class TMSimulator {
                 }
                 else if(TM.get(currentState).getTapeDirection(tape.get(head)).equals("R"))
                 {
-                    System.out.print(tape.get(head));
+                    // System.out.print(tape.get(head));
 
                     previousState = currentState;
                     //CHECKED IF USING PREVIOUS STATE COUNTER WAS ISSUE !!!
                     currentState = TM.get(currentState).getNextState(tape.get(head));
+                    
+                    tape.set(head, TM.get(previousState).getWriteValue(tape.get(head)));
                     if(TM.get(currentState).isAcceptState())
                     {
                         //Program has reached the accepted state and rest of the tape and string can be ignored 
                         break;
                     }
-                    tape.set(head, TM.get(previousState).getWriteValue(tape.get(head)));
                     if(head == (tape.size() - 1)) {
                         tape.addLast(0);
                     }
@@ -220,7 +227,7 @@ public class TMSimulator {
                 //System.out.println(currentState + "and head is located at: " + head);
                 //Might need handle so tape doesn't end up going off into nowhere?
                 //System.out.print(head);
-                //System.out.println(tape);
+                // System.out.println(tape);
                 /*
                 Moved to check immediatly when we change states. Don't need to change anything else in the machine once the proper state is reached
                 if(TM.get(currentState).isAcceptState())
@@ -239,6 +246,13 @@ public class TMSimulator {
             }
         }
 
+        System.out.println("");
+        System.out.println(tape);
+        int count = 0;
+        for (int t : tape) {
+            count = count + t;
+        }
+        System.out.println("\n" + count);
         //Print a blank line
         System.out.println();
 
