@@ -130,18 +130,21 @@ public class TMSimulator {
                 //lineScanner.close();
                 break;
             }
+            else
+            {
+                line = lineScanner.nextLine();
+            }
             
-            line = lineScanner.nextLine();
             //System.out.println(i);
         }
         //Read through input string
         String inputString;
         int head = 0; 
-        if(lineScanner.hasNext())
+        if(!line.contains(","))
         {
             //The machine has a string for input
-            inputString = lineScanner.next();
-            for (char c : inputString.toCharArray())
+            inputString = line;
+            for (int c : inputString.toCharArray())
             {
                 tape.add(Character.getNumericValue(c));
             }
