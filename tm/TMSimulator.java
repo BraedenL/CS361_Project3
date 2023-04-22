@@ -136,7 +136,7 @@ public class TMSimulator {
         }
         //Read through input string
         String inputString;
-        int head;
+        int head = 0; 
         if(lineScanner.hasNext())
         {
             //The machine has a string for input
@@ -145,16 +145,11 @@ public class TMSimulator {
             {
                 tape.add(c);
             }
-            head = tape.get(0);
         }
         else
         {
             //The machine does not have an input string
-            for(int i = 0; i < totalTransitionCount; i++)
-            {
-                tape.add(0);
-            }
-            head = 0;
+            tape.add(0);
         }
         
         //Set the tape to the values inside of the input string
