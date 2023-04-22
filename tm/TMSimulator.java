@@ -155,7 +155,7 @@ public class TMSimulator {
         //Set the tape to the values inside of the input string
         int currentState = 0;
 
-        System.out.println(tape);
+        //System.out.println(tape);
         
         //////////////////////
         //// Reading Tape ////
@@ -187,7 +187,8 @@ public class TMSimulator {
                     if(tape.indexOf(head) == 0) {
                         tape.addFirst(0);
                     }
-                    head--; //since were adding to the front it would effectively move the head without actually having to change the value of head
+                    //I think this head-- needs checking where it is to decide if to move it, mainly when adding new 0
+                    head--;
                 }
                 else if(TM.get(currentState).getTapeDirection(tape.get(head)).equals("R"))
                 {
