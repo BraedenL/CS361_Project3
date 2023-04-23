@@ -75,7 +75,7 @@ public class TMSimulator {
         TM.get(0).setIsStart(true);
         TM.get(totalStates-1).setIsAccept(true);
 
-        System.out.println(totalStates + " - " + alphabetCount + " - " + totalTransitionCount + " - " + transitionPerState);
+        // System.out.println(totalStates + " - " + alphabetCount + " - " + totalTransitionCount + " - " + transitionPerState);
         
         //Use a loop for remaining lines + addational scanner to build transitions
         Scanner characterScanner;
@@ -132,8 +132,8 @@ public class TMSimulator {
             
             if(!lineScanner.hasNext()){ //this should only be possible after all transitions are read in and there is no string given
                 //The file has no input string check printout 
-                System.out.println("There is no provided input string, initializing string with all 0's");
-                System.out.print("\n");//print a newline so user knows that the program didn't have an unexpected failure
+                // System.out.println("There is no provided input string, initializing string with all 0's");
+                // System.out.print("\n");//print a newline so user knows that the program didn't have an unexpected failure
                 //lineScanner.close();
                 break;
             }
@@ -182,23 +182,12 @@ public class TMSimulator {
         int lastMove = 1; // 0 represents the last move being a previous and a 1 represents the last move being a next
         while(currentState != totalStates-1)
         {
-            //Print out each position in tape visited in the machine
-            //System.out.println(tape.get(head).toString());
-            // if(tape.size() == 138){
-            //     System.out.println("made it");
-            // }
-            // if(head == 10){
-            //     System.out.println("made it back");
-            // }
             testTracker++;
             if(TM.get(currentState).isTransition(currentElement))
             {
                 //Move the tape
                 if(TM.get(currentState).getTapeDirection(currentElement).equals("L"))
                 {
-                    // System.out.print(tape.get(head));
-                    //System.out.print(tape.get(head));
-
                     previousState = currentState;
                     //Checked if using a previous state counter was issue!!!
                     currentState = TM.get(currentState).getNextState(currentElement);
@@ -265,46 +254,24 @@ public class TMSimulator {
                         lastMove = 1; //update that we moved forward wether if statement was executed or not
                     }
                     head++;//since were adding a zero at the end we still need to shift the head to move into the new spot
-                    // //since we are moving forward by one, we need to call next on iter once no matter what
-                    // currentElement = headIter.next();
-                    // //but if the last move used to find currentElement, was a previous then we need to call next twice to update currentElement correctly
-                    // if(lastMove == 0) {
-                    //     currentElement = headIter.next();
-                    // }
-                    // lastMove = 1; //update that we moved forward wether if statement was executed or not
+                    
                 }
-                //Need to move the current state
-                //System.out.println(currentState + "and head is located at: " + head);
-                //Might need handle so tape doesn't end up going off into nowhere?
-                //System.out.print(head);
-                // System.out.println(tape);
-                /*
-                Moved to check immediatly when we change states. Don't need to change anything else in the machine once the proper state is reached
-                if(TM.get(currentState).isAcceptState())
-                {
-                    //Program has reached the accepted state and rest of the tape and string can be ignored 
-                    break;
-                }
-                */
-                //Check for a loop, halt machine
-                /*
-                if(timeCheck >= totalTransitionCount)
-                {
-                    break;
-                }
-                */
+                
             }
         }
 
-        System.out.println("");
-        System.out.println(tape);
-        int count = 0;
-        for (int t : tape) {
-            count = count + t;
-        }
-        System.out.println("\n" + count);
+        // System.out.println(tape);
+        // int count = 0;
+        // for (int t : tape) {
+        //     count = count + t;
+        // }
+        // System.out.println("\n" + count);
         //Print a blank line
-        System.out.println();
+        // System.out.println();
+
+        for (int t : tape) {
+            System.out.print(t);
+        }
 
         //Round out and close
         lineScanner.close();
