@@ -10,6 +10,11 @@ import java.util.Scanner;
 public class TMSimulator {
     //Main class to create and manage the Turing Machine
 
+    /**
+     * The main driver for the TM machine. Takes in the input file and creates the machine based on the given properties and transitions
+     * @param args - used to find input file name
+     * @throws FileNotFoundException - in case no file is given
+     */
     public static void main(String[] args) throws FileNotFoundException {
 
         //Handle the tape using a doubly linked list, using LinkedList java class
@@ -192,6 +197,7 @@ public class TMSimulator {
                 if(TM.get(currentState).getTapeDirection(currentElement).equals("L"))
                 {
                     // System.out.print(tape.get(head));
+                    //System.out.print(tape.get(head));
 
                     previousState = currentState;
                     //Checked if using a previous state counter was issue!!!
@@ -289,11 +295,5 @@ public class TMSimulator {
 
         //Round out and close
         lineScanner.close();
-    }
-
-    //Just creating space
-    public void function()
-    {
-
     }
 }
