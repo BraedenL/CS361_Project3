@@ -35,8 +35,7 @@ and then run the main file using
 $ java TMSimulator [input_file_name.txt]
 
 ## Sources used
-
-Some API documents for java classes and iterators and some in class questions
+Some Oracle documents for java classes and iterators and some in class questions
 ----------
 This README template is using Markdown. To preview your README output,
 you can copy your file contents to a Markdown editor/previewer such
