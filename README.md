@@ -23,7 +23,9 @@ I think for us in this project it took us a while to get things really going. Th
     - Start early, make things easy to change early on
 ## Compiling and Using
 
-Compile using the command
+Navigate to the project directory and then into the tm folder, then compile using the commands
+$ javac TranInfo.java
+$ javac TMState.java
 $ javac TMSimulator.java
 
 and then run the main file using
