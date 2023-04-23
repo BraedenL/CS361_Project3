@@ -203,6 +203,8 @@ public class TMSimulator {
                     //Checked if using a previous state counter was issue!!!
                     currentState = TM.get(currentState).getNextState(currentElement);
                     headIter.set(TM.get(previousState).getWriteValue(currentElement));
+                    //now need to update currentElement
+                    currentElement = (TM.get(previousState).getWriteValue(currentElement));
                     if(TM.get(currentState).isAcceptState())
                     {
                         //Program has reached the accepted state and rest of the tape and string can be ignored 
@@ -215,6 +217,7 @@ public class TMSimulator {
                             lastMove = 0; //since we just went previous, need to update the last move variable
                         }
                         headIter.add(0);
+                        currentElement = headIter.previous(); //sets the current element to previous value which should be the 0 just added
                         // tape.addFirst(0);
                     }
                     else{
@@ -235,8 +238,9 @@ public class TMSimulator {
                     previousState = currentState;
                     //CHECKED IF USING PREVIOUS STATE COUNTER WAS ISSUE !!!
                     currentState = TM.get(currentState).getNextState(currentElement);
-                    
                     headIter.set(TM.get(previousState).getWriteValue(currentElement));
+                    //now need to update currentElement
+                    currentElement = (TM.get(previousState).getWriteValue(currentElement));
                     if(TM.get(currentState).isAcceptState())
                     {
                         //Program has reached the accepted state and rest of the tape and string can be ignored 
@@ -249,16 +253,25 @@ public class TMSimulator {
                             lastMove = 1; //since we just went next, need to update the last move variable
                         }
                         headIter.add(0);
+                        currentElement = headIter.previous();
+                        currentElement = headIter.next(); //doing this to avoid a state exception from headiter.set()
                         // tape.addLast(0);
                     }
-                    head++;//since were adding a zero at the end we still need to shift the head to move into the new spot
-                    //since we are moving forward by one, we need to call next on iter once no matter what
-                    currentElement = headIter.next();
-                    //but if the last move used to find currentElement, was a previous then we need to call next twice to update currentElement correctly
-                    if(lastMove == 0) {
-                        currentElement = headIter.next();
+                    else{
+                        currentElement = headIter.next(); //no matter what, need to move right
+                        if(lastMove == 0) { //if the last call was a previous, then we need to do two nexts()
+                            currentElement = headIter.next();
+                        }
+                        lastMove = 1; //update that we moved forward wether if statement was executed or not
                     }
-                    lastMove = 1; //update that we moved forward wether if statement was executed or not
+                    head++;//since were adding a zero at the end we still need to shift the head to move into the new spot
+                    // //since we are moving forward by one, we need to call next on iter once no matter what
+                    // currentElement = headIter.next();
+                    // //but if the last move used to find currentElement, was a previous then we need to call next twice to update currentElement correctly
+                    // if(lastMove == 0) {
+                    //     currentElement = headIter.next();
+                    // }
+                    // lastMove = 1; //update that we moved forward wether if statement was executed or not
                 }
                 //Need to move the current state
                 //System.out.println(currentState + "and head is located at: " + head);
