@@ -1,6 +1,6 @@
 # Project 3: Turing Machine
 
-* Author: Braeden LaCombe
+* Author: Braeden LaCombe, Andrew Lackey
 * Class: CS361 Section 1
 * Semester: Spring 2023
 
